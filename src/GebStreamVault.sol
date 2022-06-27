@@ -15,11 +15,10 @@ abstract contract TokenLike {
 
 /**
  * @title GebStreamVault
- * @author Reflexer Labs
  * @notice Inspired by Ameen's Sablier stream-pie contract that can be loaded with FLX and an authed address can:
  *    - get back FLX from the contract,
  *    - start a Sablier stream with custom params (duration),
- *    - stop a stream.
+ *    - stop a stream
  * The contract can only have 1 stream active at any time. If a stream is cancelled, it can be started again (with custom params/duration).
  */
 contract GebStreamVault is GebAuth {
@@ -29,7 +28,7 @@ contract GebStreamVault is GebAuth {
     // --- Init Functions ---
     /**
       * @notice Constructor.
-      * @param sablierAddress address of Sablier.
+      * @param sablierAddress Address of Sablier.
       */
     constructor(address sablierAddress) public {
         require(sablierAddress != address(0), "GebStreamVault/null-sablier-address");
@@ -52,8 +51,8 @@ contract GebStreamVault is GebAuth {
 
     /**
      * @notice Creates a Sablier stream
-     * @param recipient The address towards which the money is streamed.
-     * @param deposit The amount of money to be streamed.
+     * @param recipient The address toward which the tokens are streamed.
+     * @param deposit The amount of tokens to be streamed.
      * @param tokenAddress The ERC20 token to use as streaming currency.
      * @param startTime The unix timestamp for when the stream starts.
      * @param stopTime The unix timestamp for when the stream stops.
@@ -82,12 +81,11 @@ contract GebStreamVault is GebAuth {
     }
 
     /**
-     * @notice Transfer any token from treasury to dst (admin only).
+     * @notice Transfer any token from this contract to dst (admin only).
      * @param dst The address to transfer tokens to.
      * @param amount The amount of tokens to transfer.
      */
     function transferERC20(address _token, address dst, uint256 amount) external isAuthorized {
         TokenLike(_token).transfer(dst, amount);
     }
-
 }
